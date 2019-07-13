@@ -1,0 +1,5 @@
+github.com/angelhack2019/lib v0.0.0-20190713212944-d8132c335a60 h1:Ny8h/rJkWt6cLh6liuEmBsSgfEe2IILVWFyh39HdGCg=
+github.com/angelhack2019/lib v0.0.0-20190713215402-f41175a9f525 h1:hOyQsfynVB4PT9URDfmmKruLbnseEcrlX+fRyuan+HU=
+github.com/angelhack2019/lib v0.0.0-20190713215402-f41175a9f525/go.mod h1:fSfvjmVj+2IFMGB8Sx57tmnHqA38YiIzavZ1FAmqPAg=
+github.com/gorilla/mux v1.7.3 h1:gnP5JzjVOuiZD07fKKToCAOjS0yOpj/qPETTXCCS6hw=
+github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
