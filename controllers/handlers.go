@@ -28,16 +28,17 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		utility.RespondWithJSON(w, http.StatusOK, uuid)
 		return
 	} else {
-		utility.RespondWithError(w, http.StatusUnauthorized, "Invalid login")
+		msg := uuid
+		utility.RespondWithError(w, http.StatusUnauthorized, msg)
 	}
 }
 
 func HandleGetUser(w http.ResponseWriter, r *http.Request) {
 	uuid := mux.Vars(r)["uuid"]
 
-	user, ok := interfaces.GetUser(uuid)
+	user, errorMsg := interfaces.GetUser(uuid)
 
-	if !ok {
+	if errorMsg != "" {
 		utility.RespondWithError(w, http.StatusOK, "Failed to get user with uuid: "+uuid)
 		return
 	}
@@ -46,13 +47,16 @@ func HandleGetUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleEditUser(w http.ResponseWriter, r *http.Request) {
+	uuid := mux.Vars(r)["uuid"]
 	user := &models.User{}
 	utility.ParseRequestJSON(r, user)
 
-	ok := interfaces.EditUser(user)
+	user.UUID = uuid
 
-	if !ok {
-		utility.RespondWithError(w, http.StatusOK, "Failed to update user with uuid: "+uuid)
+	errorMsg := interfaces.EditUser(user)
+
+	if errorMsg != "" {
+		utility.RespondWithError(w, http.StatusOK, errorMsg)
 		return
 	}
 
@@ -63,10 +67,10 @@ func HandleNewUser(w http.ResponseWriter, r *http.Request) {
 	user := &models.User{}
 	utility.ParseRequestJSON(r, user)
 
-	uuid, ok := interfaces.CreateUser(user)
+	uuid, errorMsg := interfaces.CreateUser(user)
 
-	if !ok {
-		utility.RespondWithError(w, http.StatusOK, "Error creating new user "+user.Email)
+	if errorMsg != "" {
+		utility.RespondWithError(w, http.StatusOK, errorMsg)
 		return
 	}
 
