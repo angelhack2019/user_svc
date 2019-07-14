@@ -17,8 +17,7 @@ func initRoutes() {
 	router.Host("localhost").Schemes("http")
 
 	router.HandleFunc("/", controllers.HandleHome).Methods("GET")
-	router.HandleFunc("/login", controllers.HandleLogin).Methods("GET")
-	router.HandleFunc("/login/auth", controllers.HandleAuth).Methods("POST")
+	router.HandleFunc("/login", controllers.HandleLogin).Methods("POST")
 
 	http.Handle("/", router)
 }
