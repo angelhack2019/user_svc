@@ -61,19 +61,23 @@ func LoginUser(email string, password string) (string, bool) {
 		return err.Error(), false
 	}
 
-	uuid := ""
+	var retUUID string
 
 	for row.Next() {
-		err := row.Scan(&uuid)
+		err := row.Scan(&retUUID)
 		if err != nil {
 			return err.Error(), false
 		}
-		if uuid == "" {
-			return "Unautorized", false
+		if retUUID == "" {
+			return "Unauthorized", false
 		}
 	}
 
-	return uuid, true
+	if retUUID == "" {
+		return "Unauthorized", false
+	}
+
+	return retUUID, true
 }
 
 func GetUser(uuid string) (models.User, string) {
