@@ -68,6 +68,9 @@ func LoginUser(email string, password string) (string, bool) {
 		if err != nil {
 			return err.Error(), false
 		}
+		if uuid == "" {
+			return "Unautorized", false
+		}
 	}
 
 	return uuid, true
