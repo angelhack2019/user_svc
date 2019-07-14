@@ -2,19 +2,27 @@ package interfaces
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/angelhack2019/lib/models"
 	"github.com/google/uuid"
 	_ "github.com/lib/pq"
-)
-
-// Duplicate from food_svc =========>
-const (
-	connectionString = "host=localhost user=default password=default dbname=dough_you sslmode=disable port=5432"
+	"github.com/spf13/viper"
 )
 
 var (
-	postgresDB *sql.DB
+	pg               string
+	connectionString string
+	postgresDB       *sql.DB
 )
+
+func init() {
+	viper.BindEnv("PG")
+	pg = viper.GetString("PG")
+	connectionString = fmt.Sprintf(
+		"host=%s user=default password=default dbname=dough_you sslmode=disable port=5432",
+		pg,
+	)
+}
 
 func refreshDBConnection() error {
 	if postgresDB == nil {
@@ -114,8 +122,8 @@ func CreateUser(user *models.User) (string, string) {
 
 	newUUID := uuid.New().String()
 	_, err := postgresDB.Exec(command, newUUID, user.FirstName, user.LastName, user.Email, user.Password, user.NumRatings,
-		  					  user.SumRatings, user.Bio, user.PicURL,
-							  user.School, user.State, user.City, user.PhoneNumber)
+		user.SumRatings, user.Bio, user.PicURL,
+		user.School, user.State, user.City, user.PhoneNumber)
 
 	if err != nil {
 		return "", err.Error()
@@ -137,8 +145,8 @@ func EditUser(user *models.User) string {
 				WHERE dough_you.users.uuid = $12
 				`
 	_, err := postgresDB.Exec(command, user.Email, user.FirstName, user.LastName,
-								 user.NumRatings, user.SumRatings, user.Bio, user.PicURL,
-								 user.School, user.State, user.City, user.PhoneNumber, user.UUID)
+		user.NumRatings, user.SumRatings, user.Bio, user.PicURL,
+		user.School, user.State, user.City, user.PhoneNumber, user.UUID)
 
 	if err != nil {
 		return err.Error()
