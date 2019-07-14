@@ -28,8 +28,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		utility.RespondWithJSON(w, http.StatusOK, uuid)
 		return
 	} else {
-		msg := uuid
-		utility.RespondWithError(w, http.StatusUnauthorized, msg)
+		utility.RespondWithError(w, http.StatusUnauthorized, "")
 	}
 }
 
