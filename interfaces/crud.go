@@ -1,4 +1,4 @@
-package models
+package interfaces
 
 import (
 	"github.com/angelhack2019/lib/mocks"
