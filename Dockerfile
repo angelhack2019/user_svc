@@ -4,7 +4,7 @@ WORKDIR $GOPATH/
 
 RUN git clone https://github.com/angelhack2019/user_svc.git
 
-WORKDIR $GOPATH/food_svc
+WORKDIR $GOPATH/user_svc
 
 RUN go mod download
 
