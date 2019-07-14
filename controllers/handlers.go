@@ -15,7 +15,7 @@ type Credentials struct {
 
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	creds := &Credentials{}
-	utility.ParseRequestJSON(r, creds)
+	utility.ParseRequestJSON(w, r, creds)
 
 	if creds.Email == "" || creds.Password == "" {
 		utility.RespondWithError(w, http.StatusBadRequest, "Missing email or password field")
@@ -49,7 +49,7 @@ func HandleGetUser(w http.ResponseWriter, r *http.Request) {
 func HandleEditUser(w http.ResponseWriter, r *http.Request) {
 	uuid := mux.Vars(r)["uuid"]
 	user := &models.User{}
-	utility.ParseRequestJSON(r, user)
+	utility.ParseRequestJSON(w, r, user)
 
 	user.UUID = uuid
 
@@ -65,7 +65,7 @@ func HandleEditUser(w http.ResponseWriter, r *http.Request) {
 
 func HandleNewUser(w http.ResponseWriter, r *http.Request) {
 	user := &models.User{}
-	utility.ParseRequestJSON(r, user)
+	utility.ParseRequestJSON(w, r, user)
 
 	uuid, errorMsg := interfaces.CreateUser(user)
 
